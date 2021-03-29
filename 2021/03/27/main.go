@@ -1,39 +1,30 @@
 package main
 
-func wordSubsets(A []string, B []string) []string {
-	cntB := make(map[rune]int)
-	for _, b := range B {
-		tmp := make(map[rune]int)
-		for _, r := range b {
-			tmp[r]++
-		}
+func countSubstrings(s string) int {
+	dp := make(map[int]map[int]bool, len(s))
+	for i := 0; i < len(s); i++ {
+		dp[i] = make(map[int]bool)
+		dp[i][i] = true
+	}
 
-		for r, cnt := range tmp {
-			if cntB[r] < cnt {
-				cntB[r] = cnt
+	ans := len(s)
+	for l := 2; l <= len(s); l++ {
+		for j := l - 1; j < len(s); j++ {
+			if l == 2 {
+				dp[j-1][j] = s[j-1] == s[j]
+
+				if dp[j-1][j] {
+					ans++
+				}
+			} else {
+				dp[j-l+1][j] = s[j-l+1] == s[j] && dp[j-l+2][j-1]
+
+				if dp[j-l+1][j] {
+					ans++
+				}
 			}
 		}
 	}
 
-	var ans []string
-	for _, a := range A {
-		allSubset := true
-
-		tmp := make(map[rune]int)
-		for _, r := range a {
-			tmp[r]++
-		}
-
-		for r, cnt := range cntB {
-			if tmp[r] < cnt {
-				allSubset = false
-				break
-			}
-		}
-
-		if allSubset {
-			ans = append(ans, a)
-		}
-	}
 	return ans
 }

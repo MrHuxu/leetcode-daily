@@ -1,46 +1,61 @@
 package main
 
-import (
-	"sort"
-)
+func pacificAtlantic(matrix [][]int) [][]int {
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
+		return nil
+	}
 
-func advantageCount(A []int, B []int) []int {
-	sort.Slice(A, func(i, j int) bool {
-		return A[i] < A[j]
-	})
-	cloneB := make([]int, len(B))
-	copy(cloneB, B)
-	sort.Slice(B, func(i, j int) bool {
-		return B[i] < B[j]
-	})
+	p := make([][]bool, len(matrix))
+	a := make([][]bool, len(matrix))
+	for i := 0; i < len(matrix); i++ {
+		p[i] = make([]bool, len(matrix[i]))
+		a[i] = make([]bool, len(matrix[i]))
+	}
 
-	m1 := make(map[int][]int)
-	m2 := make(map[int]bool)
+	for i := 0; i < len(matrix); i++ {
+		p[i][0] = true
+		a[i][len(matrix[0])-1] = true
+	}
+	for i := 0; i < len(matrix[0]); i++ {
+		p[0][i] = true
+		a[len(matrix)-1][i] = true
+	}
 
-	var front, tail int
-	for i := 0; i < len(B); i++ {
-		for tail < len(A) && A[tail] <= B[i] {
-			tail++
-		}
+	for i := 0; i < len(matrix); i++ {
+		dfs(i, 0, matrix, p)
+		dfs(i, len(matrix[0])-1, matrix, a)
+	}
+	for i := 0; i < len(matrix[0]); i++ {
+		dfs(0, i, matrix, p)
+		dfs(len(matrix)-1, i, matrix, a)
+	}
 
-		if tail == len(A) {
-			for m2[front] {
-				front++
+	var result [][]int
+	for i := 0; i < len(matrix); i++ {
+		for j := 0; j < len(matrix[i]); j++ {
+			if p[i][j] && a[i][j] {
+				result = append(result, []int{i, j})
 			}
-			m1[B[i]] = append(m1[B[i]], A[front])
-			m2[front] = true
-			continue
 		}
-
-		m1[B[i]] = append(m1[B[i]], A[tail])
-		m2[tail] = true
-		tail++
 	}
+	return result
+}
 
-	ans := make([]int, len(A))
-	for i, b := range cloneB {
-		ans[i] = m1[b][0]
-		m1[b] = m1[b][1:]
+func dfs(i, j int, matrix [][]int, result [][]bool) {
+	if i > 0 && matrix[i-1][j] >= matrix[i][j] && !result[i-1][j] {
+		result[i-1][j] = true
+		dfs(i-1, j, matrix, result)
 	}
-	return ans
+	if i < len(matrix)-1 && matrix[i+1][j] >= matrix[i][j] && !result[i+1][j] {
+		result[i+1][j] = true
+		dfs(i+1, j, matrix, result)
+	}
+	if j > 0 && matrix[i][j-1] >= matrix[i][j] && !result[i][j-1] {
+		result[i][j-1] = true
+		dfs(i, j-1, matrix, result)
+	}
+	if j < len(matrix[0])-1 && matrix[i][j+1] >= matrix[i][j] && !result[i][j+1] {
+		result[i][j+1] = true
+		dfs(i, j+1, matrix, result)
+	}
 }

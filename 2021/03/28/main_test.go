@@ -6,9 +6,10 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_countSubstrings(t *testing.T) {
+func Test_originalDigits(t *testing.T) {
 	assert := assert.New(t)
 
-	assert.Equal(3, countSubstrings("abc"))
-	assert.Equal(6, countSubstrings("aaa"))
+	assert.Equal("012", originalDigits("owoztneoer"))
+	assert.Equal("45", originalDigits("fviefuro"))
+	assert.Equal("00", originalDigits("zerozero"))
 }

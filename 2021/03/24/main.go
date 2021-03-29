@@ -1,49 +1,46 @@
-// https://leetcode.com/explore/featured/card/march-leetcoding-challenge-2021/591/week-4-march-22nd-march-28th/3682/
-
 package main
 
-import "sort"
+import (
+	"sort"
+)
 
-func threeSumMulti(arr []int, target int) int {
-	sort.Slice(arr, func(i, j int) bool {
-		return arr[i] < arr[j]
+func advantageCount(A []int, B []int) []int {
+	sort.Slice(A, func(i, j int) bool {
+		return A[i] < A[j]
+	})
+	cloneB := make([]int, len(B))
+	copy(cloneB, B)
+	sort.Slice(B, func(i, j int) bool {
+		return B[i] < B[j]
 	})
 
-	var ans int
-	for i := 0; i < len(arr)-2; i++ {
-		j := i + 1
-		k := len(arr) - 1
-		for j < k {
-			if arr[j] == arr[k] {
-				if arr[i]+arr[j]+arr[k] == target {
-					ans = (ans + (k-j+1)*(k-j)/2%1000000007) % 1000000007
-				}
-				break
-			}
+	m1 := make(map[int][]int)
+	m2 := make(map[int]bool)
 
-			switch {
-			case arr[i]+arr[j]+arr[k] < target:
-				for ; arr[j+1] == arr[j] && j < len(arr)-1; j++ {
-				}
-				j++
-
-			case arr[i]+arr[j]+arr[k] > target:
-				for ; arr[k-1] == arr[k] && k > j; k-- {
-				}
-				k--
-
-			case arr[i]+arr[j]+arr[k] == target:
-				nextj := j + 1
-				for ; arr[nextj] == arr[j] && nextj < len(arr)-1; nextj++ {
-				}
-				nextk := k - 1
-				for ; arr[nextk] == arr[k] && nextk > j; nextk-- {
-				}
-				ans = (ans + (nextj-j)*(k-nextk)%1000000007) % 1000000007
-				j = nextj
-				k = nextk
-			}
+	var front, tail int
+	for i := 0; i < len(B); i++ {
+		for tail < len(A) && A[tail] <= B[i] {
+			tail++
 		}
+
+		if tail == len(A) {
+			for m2[front] {
+				front++
+			}
+			m1[B[i]] = append(m1[B[i]], A[front])
+			m2[front] = true
+			continue
+		}
+
+		m1[B[i]] = append(m1[B[i]], A[tail])
+		m2[tail] = true
+		tail++
+	}
+
+	ans := make([]int, len(A))
+	for i, b := range cloneB {
+		ans[i] = m1[b][0]
+		m1[b] = m1[b][1:]
 	}
 	return ans
 }
