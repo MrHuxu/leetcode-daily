@@ -1,9 +1,5 @@
 package main
 
-import (
-	"strings"
-)
-
 /*
 zero  0
 one   1
@@ -96,13 +92,13 @@ func originalDigits(s string) string {
 		arr[9] = cnt['i']
 	}
 
-	var ans strings.Builder
+	var ans []byte
 	for i, cnt := range arr {
 		for cnt > 0 {
-			ans.Write([]byte{byte(i) + '0'})
+			ans = append(ans, byte(i)+'0')
 			cnt--
 		}
 	}
 
-	return ans.String()
+	return string(ans)
 }
