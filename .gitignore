@@ -1,0 +1,11 @@
+.DS_Store
+.vscode
+.tmp
+.idea/
+.statsd/
+
+log
+nohup.out
+
+output/
+main

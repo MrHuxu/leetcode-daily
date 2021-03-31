@@ -1,0 +1,35 @@
+{{ define "index" }}
+
+<div id="sider">
+  <h1>
+    LeetCode Daily
+  </h1>
+</div>
+
+<div id="divider-before-content" class="divider"></div>
+
+<div id="content">
+  <h2>Index</h2>
+
+  {{ range . }}
+  <div>
+    <a href="{{ .Path }}">{{ .Idx }}</a>
+
+    {{ range .Months }}
+    <div>
+      |-<a href="{{ .Path }}">{{ .Idx }}</a>
+
+      {{ range .Days }}
+      <div>
+        |---<a href="{{ .Path }}">{{ .Idx }}</a>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  {{ end }}
+</div>
+
+
+
+{{ end }}

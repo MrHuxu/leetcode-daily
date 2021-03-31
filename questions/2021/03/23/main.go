@@ -1,5 +1,3 @@
-// https://leetcode.com/explore/featured/card/march-leetcoding-challenge-2021/591/week-4-march-22nd-march-28th/3682/
-
 package main
 
 import "sort"

@@ -1,0 +1,17 @@
+@protocol = http
+@host = localhost
+@port = 3542
+
+GET {{protocol}}://{{host}}:{{port}}/
+
+###
+
+GET {{protocol}}://{{host}}:{{port}}/2021
+
+###
+
+GET {{protocol}}://{{host}}:{{port}}/2021/03
+
+###
+
+GET {{protocol}}://{{host}}:{{port}}/2021/03/28

@@ -1,0 +1,28 @@
+{{ define "month" }}
+
+<div id="sider">
+  <a id="breadcrumb-home" href="/">
+    <i class="fa fa-home" aria-hidden="true"></i>
+  </a>
+
+  {{ range .Breadcrumbs }}
+  > <a href="{{ .Path }}">{{ .Label }}</a>
+  {{ end }}
+
+  <h1>LeetCode Daily</h1>
+  <h1>{{ .Title }}</h1>
+</div>
+
+<div id="divider-before-content" class="divider"></div>
+
+<div id="content">
+  <h2>Index</h2>
+
+  {{ range .Days }}
+  <div>
+    <a href="{{ .Path }}">{{ .Idx }}</a>
+  </div>
+  {{ end }}
+</div>
+
+{{ end }}
