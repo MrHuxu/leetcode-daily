@@ -1,13 +1,22 @@
 {{ define "error" }}
 
 <style>
-  #content {
-    padding: 1.5em
+  #home-link {
+    margin-top: 20px;
   }
 </style>
 
+<div id="sider">
+  <h1>LeetCode Daily</h1>
+</div>
+
+<div id="divider-before-content" class="divider"></div>
+
 <div id="content">
   <strong style="color: red">{{ . }}</strong>
+  <div id="home-link">
+    <a href="/"> >> back to home</a>
+  </div>
 </div>
 
 {{ end }}

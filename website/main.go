@@ -27,8 +27,9 @@ func index(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"err": err.Error(),
+			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
+				"page":  "error",
+				"error": err.Error(),
 			})
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
@@ -57,8 +58,9 @@ func year(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"err": err.Error(),
+			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
+				"page":  "error",
+				"error": err.Error(),
 			})
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
@@ -76,8 +78,9 @@ func month(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"err": err.Error(),
+			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
+				"page":  "error",
+				"error": err.Error(),
 			})
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
@@ -95,8 +98,9 @@ func day(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.JSON(http.StatusInternalServerError, gin.H{
-				"err": err.Error(),
+			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
+				"page":  "error",
+				"error": err.Error(),
 			})
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
