@@ -22,19 +22,25 @@ func main() {
 	server.Run(":3542")
 }
 
+func renderError(ctx *gin.Context, err error) {
+	ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
+		"page":  "error",
+		"error": err.Error(),
+		"title": "Oops!!!",
+	})
+}
+
 func index(ctx *gin.Context) {
 	var years []Year
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
-				"page":  "error",
-				"error": err.Error(),
-			})
+			renderError(ctx, err)
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
 				"page":  "index",
 				"years": years,
+				"title": "LeetCode Daily - xhu",
 			})
 		}
 	}()
@@ -58,14 +64,12 @@ func year(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
-				"page":  "error",
-				"error": err.Error(),
-			})
+			renderError(ctx, err)
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
-				"page": "year",
-				"year": year,
+				"page":  "year",
+				"year":  year,
+				"title": fmt.Sprintf("LeetCode Daily - %s - xhu", year.Title),
 			})
 		}
 	}()
@@ -78,14 +82,12 @@ func month(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
-				"page":  "error",
-				"error": err.Error(),
-			})
+			renderError(ctx, err)
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
 				"page":  "month",
 				"month": month,
+				"title": fmt.Sprintf("LeetCode Daily - %s - xhu", month.Title),
 			})
 		}
 	}()
@@ -98,14 +100,12 @@ func day(ctx *gin.Context) {
 	var err error
 	defer func() {
 		if err != nil {
-			ctx.HTML(http.StatusInternalServerError, "base.tmpl", gin.H{
-				"page":  "error",
-				"error": err.Error(),
-			})
+			renderError(ctx, err)
 		} else {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
-				"page": "day",
-				"day":  day,
+				"page":  "day",
+				"day":   day,
+				"title": fmt.Sprintf("LeetCode Daily - %s - xhu", day.Title),
 			})
 		}
 	}()
