@@ -20,9 +20,6 @@ func TestMyCircularQueue(t *testing.T) {
 	assert.True(cq.EnQueue(4))
 	assert.Equal(4, cq.Rear())
 
-	// ["MyCircularQueue","enQueue","Rear","Rear","deQueue","enQueue","Rear","deQueue","Front","deQueue","deQueue","deQueue"]
-	// [[6],[6],[],[],[],[5],[],[],[],[],[],[]]
-
 	cq1 := Constructor(6)
 	assert.True(cq1.EnQueue(6))
 	assert.Equal(6, cq1.Rear())
