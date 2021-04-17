@@ -1,4 +1,4 @@
-\>\> [题目连接](http://baidu.com)
+\>\> [题目连接](https://leetcode.com/explore/featured/card/march-leetcoding-challenge-2021/591/week-4-march-22nd-march-28th/3682/)
 
 题意: 给定一个数组 `arr`, 找出里面所有和为 `target` 的三项组合数, 不同下标相同的值按不同组处理
 
