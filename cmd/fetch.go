@@ -9,11 +9,11 @@ import (
 	"sync"
 
 	"github.com/MrHuxu/leetcode-daily/cmd/utils"
+
 	"github.com/gosuri/uiprogress"
 )
 
 func fetch() {
-
 	var itemIDs []string
 	if years, err := os.ReadDir("questions"); err != nil {
 		log.Fatal(err)
@@ -48,7 +48,7 @@ func fetch() {
 	bar := uiprogress.AddBar(len(itemIDs)).AppendCompleted().PrependElapsed()
 	bar.Incr()
 
-	data := make(map[string]Item)
+	data := make(map[string]utils.ItemInfo)
 	var mu sync.Mutex
 
 	ch := make(chan string, 5)
@@ -69,9 +69,7 @@ func fetch() {
 				item := utils.GetItem(itemID)
 
 				mu.Lock()
-				data[item.ID] = Item{
-					Title: item.Title,
-				}
+				data[item.ID] = item
 				mu.Unlock()
 
 				bar.Incr()
@@ -82,8 +80,4 @@ func fetch() {
 
 	bs, _ := json.Marshal(data)
 	os.WriteFile("output/data.json", bs, 0666)
-}
-
-type Item struct {
-	Title string `json:"title"`
 }

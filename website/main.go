@@ -1,16 +1,31 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"os"
+	"strings"
+
+	"github.com/MrHuxu/leetcode-daily/cmd/utils"
 
 	"github.com/gin-gonic/gin"
 	"github.com/russross/blackfriday/v2"
 )
 
+var data = make(map[string]utils.ItemInfo)
+
 func main() {
+	if bs, err := os.ReadFile("./output/data.json"); err != nil {
+		log.Fatal(err)
+	} else {
+		if err := json.Unmarshal(bs, &data); err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	server := gin.Default()
 	server.LoadHTMLGlob("./website/templates/*")
 
@@ -51,6 +66,10 @@ func index(ctx *gin.Context) {
 	}
 
 	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".") {
+			continue
+		}
+
 		y, err := getYear(entry.Name())
 		if err != nil {
 			return
@@ -105,7 +124,7 @@ func day(ctx *gin.Context) {
 			ctx.HTML(http.StatusOK, "base.tmpl", gin.H{
 				"page":  "day",
 				"day":   day,
-				"title": fmt.Sprintf("LeetCode Daily - %s - xhu", day.Title),
+				"title": fmt.Sprintf("LeetCode Daily - %s: %s - xhu", day.Title, day.ItemInfo.Question.Title),
 			})
 		}
 	}()
@@ -135,6 +154,10 @@ func getYear(year string) (y Year, err error) {
 
 	entries, err := os.ReadDir(fmt.Sprintf("./questions/%s", year))
 	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".") {
+			continue
+		}
+
 		m, innerErr := getMonth(year, entry.Name())
 		if innerErr != nil {
 			err = innerErr
@@ -167,6 +190,10 @@ func getMonth(year, month string) (m Month, err error) {
 
 	entries, err := os.ReadDir(fmt.Sprintf("./questions/%s/%s", year, month))
 	for _, entry := range entries {
+		if strings.HasPrefix(entry.Name(), ".") {
+			continue
+		}
+
 		d, innerErr := getDay(year, month, entry.Name())
 		if innerErr != nil {
 			err = innerErr
@@ -185,6 +212,7 @@ type Day struct {
 	Description template.HTML
 	Code        string
 	Test        string
+	ItemInfo    utils.ItemInfo
 }
 
 func getDay(year, month, day string) (d Day, err error) {
@@ -206,6 +234,8 @@ func getDay(year, month, day string) (d Day, err error) {
 	if err == nil {
 		d.Description = template.HTML(blackfriday.Run(bs))
 	}
+	itemID := utils.ParseItemID(bs)
+	d.ItemInfo = data[itemID]
 
 	bs, err = os.ReadFile(fmt.Sprintf("./questions/%s/%s/%s/main.go", year, month, day))
 	if err != nil {

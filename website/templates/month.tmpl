@@ -20,7 +20,7 @@
 
   {{ range .Days }}
   <div>
-    <a href="{{ .Path }}">{{ .Idx }}</a>
+    <a href="{{ .Path }}">{{ .Idx }}: {{ .ItemInfo.Question.Title }}</a>
   </div>
   {{ end }}
 </div>
