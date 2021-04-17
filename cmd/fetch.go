@@ -6,12 +6,15 @@ import (
 	"log"
 	"os"
 	"strings"
+	"sync"
 
 	"github.com/MrHuxu/leetcode-daily/cmd/utils"
+	"github.com/gosuri/uiprogress"
 )
 
 func fetch() {
-	data := make(map[string]Item)
+
+	var itemIDs []string
 	if years, err := os.ReadDir("questions"); err != nil {
 		log.Fatal(err)
 	} else {
@@ -33,12 +36,7 @@ func fetch() {
 								log.Fatal(err)
 							}
 
-							itemID := utils.ParseItemID(bs)
-							item := utils.GetItem(itemID)
-
-							data[itemID] = Item{
-								Title: item.Title,
-							}
+							itemIDs = append(itemIDs, utils.ParseItemID(bs))
 						}
 					}
 				}
@@ -46,8 +44,44 @@ func fetch() {
 		}
 	}
 
+	uiprogress.Start()
+	bar := uiprogress.AddBar(len(itemIDs)).AppendCompleted().PrependElapsed()
+	bar.Incr()
+
+	data := make(map[string]Item)
+	var mu sync.Mutex
+
+	ch := make(chan string, 5)
+
+	go func() {
+		for _, itemID := range itemIDs {
+			ch <- itemID
+		}
+		close(ch)
+	}()
+
+	var wg sync.WaitGroup
+	wg.Add(5)
+	for i := 0; i < 5; i++ {
+		go func() {
+			defer wg.Done()
+			for itemID := range ch {
+				item := utils.GetItem(itemID)
+
+				mu.Lock()
+				data[item.ID] = Item{
+					Title: item.Title,
+				}
+				mu.Unlock()
+
+				bar.Incr()
+			}
+		}()
+	}
+	wg.Wait()
+
 	bs, _ := json.Marshal(data)
-	fmt.Println(string(bs))
+	os.WriteFile("output/data.json", bs, 0666)
 }
 
 type Item struct {
