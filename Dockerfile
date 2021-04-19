@@ -9,7 +9,7 @@ ENV CGO_ENABLED 0
 COPY . /work/
 
 ENV GOPROXY https://goproxy.io,direct
-RUN make build
+RUN make web
 
 FROM scratch
 

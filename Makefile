@@ -4,10 +4,10 @@ gen:
 test:
 	go test -v ./questions/...
 
-build:
+web:
 	rm -rf output || mkdir output
 	go build -o output/website website/main.go
 	go run cmd/*.go -c=fetch
 
-run:
+serve:
 	./output/website

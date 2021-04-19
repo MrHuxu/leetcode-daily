@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/MrHuxu/leetcode-daily/cmd/utils"
-	"github.com/gosuri/uiprogress"
 
+	"github.com/gosuri/uiprogress"
 	"github.com/manifoldco/promptui"
 )
 
@@ -43,17 +43,21 @@ func gen() {
 	os.MkdirAll(dir, os.ModePerm)
 	bar.Incr()
 
+	itemID := utils.ParseItemIDFromURL(url)
+	item := utils.GetItem(itemID)
+	question := utils.GetQuestion(item.Question.TitleSlug)
+
 	os.WriteFile(dir+"/description.md", []byte(fmt.Sprintf(`\>\> [题目链接](%s)
 
 题意:
 
 解答:
-`, url)), 0666)
-	bar.Incr()
 
-	itemID := utils.ParseItemIDFromURL(url)
-	item := utils.GetItem(itemID)
-	question := utils.GetQuestion(item.Question.TitleSlug)
+***original_content***
+
+%s
+`, url, question.Content)), 0666)
+	bar.Incr()
 
 	os.WriteFile(dir+"/main.go", []byte(fmt.Sprintf(`package main
 

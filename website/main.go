@@ -232,7 +232,7 @@ func getDay(year, month, day string) (d Day, err error) {
 
 	bs, err := os.ReadFile(fmt.Sprintf("./questions/%s/%s/%s/description.md", year, month, day))
 	if err == nil {
-		d.Description = template.HTML(blackfriday.Run(bs))
+		d.Description = template.HTML(blackfriday.Run([]byte(strings.Split(string(bs), "***original_content***")[0])))
 	}
 	itemID := utils.ParseItemID(bs)
 	d.ItemInfo = data[itemID]
