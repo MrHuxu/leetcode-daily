@@ -1,3 +1,6 @@
+gen:
+	go run cmd/*.go -c=gen
+
 test:
 	go test -v ./questions/...
 
