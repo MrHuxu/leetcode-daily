@@ -1,8 +1,8 @@
 \>\> [题目链接](https://leetcode.com/explore/featured/card/april-leetcoding-challenge-2021/595/week-3-april-15th-april-21st/3712/)
 
-题意:
+题意: 给定一个链表的头指针 `head` 和一个正整数 `n`, 去掉链表的倒数第 n 个节点并返回头节点
 
-解答:
+解答: 快慢指针
 
 ***original_content***
 
