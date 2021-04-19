@@ -16,13 +16,13 @@
 <div id="divider-before-content" class="divider"></div>
 
 <div id="content">
-  <h2>Index</h2>
-
-  {{ range .Days }}
-  <div>
-    <a href="{{ .Path }}">{{ .Idx }}: {{ .ItemInfo.Question.Title }}</a>
-  </div>
-  {{ end }}
+  <ul>
+    {{ range .Days }}
+    <li>
+      <a href="{{ .Path }}">{{ .Idx }}: {{ .ItemInfo.Question.Title }}</a>
+    </li>
+    {{ end }}
+  </ul>
 </div>
 
 {{ end }}
