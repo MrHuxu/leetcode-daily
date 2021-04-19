@@ -2,7 +2,7 @@
 
 题意: 给定一个数组 `nums`, 数字各不相同, 以及一个目标 `target`, 找出里面所有数字组合和为 target 的个数, 数字可以重复使用
 
-解答: 使用 dp 求解, 使用一个 map `dp map[int]int` 用 dp[i] 表示 target 为 i 时有的组合数, 那么对于任意一个 i, 对于 nums 里的每一个数, 都有如下的状态转移共识 `dp[i]+=dp[i-num]`, 最后返回 dp[target] 即可
+解答: 使用 dp 求解, 使用一个 map `dp map[int]int` 用 dp[i] 表示 target 为 i 时有的组合数, 那么对于任意一个 i, 对于 nums 里的每一个数, 都有如下的状态转移公式 `dp[i]+=dp[i-num]`, 最后返回 dp[target] 即可
 
 ***original_content***
 
