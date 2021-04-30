@@ -37,7 +37,7 @@ func gen() {
 	}
 
 	uiprogress.Start()
-	bar := uiprogress.AddBar(3).AppendCompleted().PrependElapsed()
+	bar := uiprogress.AddBar(2).AppendCompleted().PrependElapsed()
 
 	dir := fmt.Sprintf("questions/%s/%s/%s", year, month, day)
 	os.MkdirAll(dir, os.ModePerm)
@@ -63,9 +63,6 @@ func gen() {
 
 %s
 `, question.CodeDefinitions["golang"].DefaultCode)), 0666)
-	bar.Incr()
-
-	os.WriteFile(dir+"/main_test.go", []byte(`package main`), 0666)
 	bar.Incr()
 
 	time.Sleep(time.Millisecond * 5)
