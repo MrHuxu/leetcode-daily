@@ -16,7 +16,6 @@ func isPowerOfThree(n int) bool {
 
 		start := 3
 		for n >= start && n%start == 0 {
-			println(start, n)
 			n /= start
 			start *= start
 		}
