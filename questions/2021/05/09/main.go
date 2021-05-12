@@ -29,9 +29,8 @@ func isPossible(target []int) bool {
 
 	if max <= (sum-max) || max%(sum-max) == 0 {
 		return false
-	} else {
-		target[maxIdx] = max % (sum - max)
 	}
 
+	target[maxIdx] = max % (sum - max)
 	return isPossible(target)
 }
