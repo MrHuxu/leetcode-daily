@@ -1,6 +1,6 @@
 \>\> [题目链接](https://leetcode.com/explore/featured/card/may-leetcoding-challenge-2021/601/week-4-may-22nd-may-28th/3752/)
 
-题意: 解决 `n` 皇后问题
+题意: 解决 N 皇后问题([Eight queens puzzle](https://en.wikipedia.org/wiki/Eight_queens_puzzle))
 
 解答: 逐行 DFS, DFS 的经典题, 不过 n 的范围很小完全可以枚举, 所以最快的解法是打表 ヾ(≧▽≦*)o
 
