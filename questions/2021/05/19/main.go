@@ -15,7 +15,6 @@ func minMoves2(nums []int) int {
 
 	var ans int
 	for _, num := range nums {
-		println(num, ans, mid)
 		ans += abs(num - mid)
 	}
 	return ans
