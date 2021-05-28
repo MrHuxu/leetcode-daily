@@ -29,7 +29,6 @@ func traverse(s string, left, right string) int {
 	if s != "" {
 		num, _ := strconv.ParseInt(s, 10, 64)
 		if nums >= numl && nums <= numr && isPalimdromic(num) && isPalimdromic(num*num) {
-			println(num)
 			ret++
 		}
 	}
