@@ -11,7 +11,6 @@ import (
 
 	"github.com/MrHuxu/leetcode-daily/cmd/utils"
 
-	"github.com/gosuri/uiprogress"
 	"github.com/manifoldco/promptui"
 )
 
@@ -36,12 +35,8 @@ func gen() {
 		year, month, day = date[:4], date[4:6], date[6:8]
 	}
 
-	uiprogress.Start()
-	bar := uiprogress.AddBar(2).AppendCompleted().PrependElapsed()
-
 	dir := fmt.Sprintf("questions/%s/%s/%s", year, month, day)
 	os.MkdirAll(dir, os.ModePerm)
-	bar.Incr()
 
 	itemID := utils.ParseItemIDFromURL(url)
 	item := utils.GetItem(itemID)
@@ -57,13 +52,11 @@ func gen() {
 
 %s
 `, url, question.Content)), 0666)
-	bar.Incr()
 
 	os.WriteFile(dir+"/main.go", []byte(fmt.Sprintf(`package main
 
 %s
 `, question.CodeDefinitions["golang"].DefaultCode)), 0666)
-	bar.Incr()
 
 	time.Sleep(time.Millisecond * 5)
 }
