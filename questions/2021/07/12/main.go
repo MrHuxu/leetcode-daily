@@ -19,10 +19,10 @@ func isIsomorphic(s string, t string) bool {
 		} else {
 			if _, ok := m2[t[i]]; ok {
 				return false
-			} else {
-				m1[s[i]] = t[i]
-				m2[t[i]] = s[i]
 			}
+
+			m1[s[i]] = t[i]
+			m2[t[i]] = s[i]
 		}
 	}
 	return true
