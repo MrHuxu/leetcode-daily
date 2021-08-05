@@ -1,8 +1,8 @@
 \>\> [题目链接](https://leetcode.com/explore/featured/card/august-leetcoding-challenge-2021/613/week-1-august-1st-august-7th/3870/)
 
-题意:
+题意: 定义一个游戏, 用一个偶数长度的数组表示一些石子, 石子有固定的值, 两个人从里面分别取一个, 拿完时谁的数字打谁就获胜, 给定数组 `piles`, 判断如果先取的话能否获胜
 
-解答:
+解答: 先取的话一定能获胜, 直接返回 true 即可
 
 ***original_content***
 
