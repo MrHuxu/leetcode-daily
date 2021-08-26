@@ -19,8 +19,7 @@ func isValidSerialization(preorder string) bool {
 
 		stack = append(stack, "#")
 		for len(stack) >= 3 && stack[len(stack)-1] == "#" && stack[len(stack)-2] == "#" && stack[len(stack)-3] != "#" {
-			stack = stack[:len(stack)-3]
-			stack = append(stack, "#")
+			stack = append(stack[:len(stack)-3], "#")
 		}
 	}
 
