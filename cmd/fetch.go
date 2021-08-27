@@ -3,8 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"os"
 	"strings"
 	"sync"
 
@@ -15,15 +15,15 @@ import (
 
 func fetch() {
 	var itemIDs []string
-	if years, err := os.ReadDir("questions"); err != nil {
+	if years, err := ioutil.ReadDir("questions"); err != nil {
 		log.Fatal(err)
 	} else {
 		for _, year := range years {
-			if months, err := os.ReadDir(fmt.Sprintf("questions/%s", year.Name())); err != nil {
+			if months, err := ioutil.ReadDir(fmt.Sprintf("questions/%s", year.Name())); err != nil {
 				log.Fatal(err)
 			} else {
 				for _, month := range months {
-					if days, err := os.ReadDir(fmt.Sprintf("questions/%s/%s", year.Name(), month.Name())); err != nil {
+					if days, err := ioutil.ReadDir(fmt.Sprintf("questions/%s/%s", year.Name(), month.Name())); err != nil {
 						log.Fatal(err)
 					} else {
 						for _, day := range days {
@@ -31,7 +31,7 @@ func fetch() {
 								continue
 							}
 
-							bs, err := os.ReadFile(fmt.Sprintf("questions/%s/%s/%s/description.md", year.Name(), month.Name(), day.Name()))
+							bs, err := ioutil.ReadFile(fmt.Sprintf("questions/%s/%s/%s/description.md", year.Name(), month.Name(), day.Name()))
 							if err != nil {
 								log.Fatal(err)
 							}
@@ -79,5 +79,5 @@ func fetch() {
 	wg.Wait()
 
 	bs, _ := json.Marshal(data)
-	os.WriteFile("output/data.json", bs, 0666)
+	ioutil.WriteFile("output/data.json", bs, 0666)
 }

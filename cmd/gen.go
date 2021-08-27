@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"os"
 	"strconv"
@@ -42,7 +43,7 @@ func gen() {
 	item := utils.GetItem(itemID)
 	question := utils.GetQuestion(item.Question.TitleSlug)
 
-	os.WriteFile(dir+"/description.md", []byte(fmt.Sprintf(`\>\> [题目链接](%s)
+	ioutil.WriteFile(dir+"/description.md", []byte(fmt.Sprintf(`\>\> [题目链接](%s)
 
 题意:
 
@@ -53,7 +54,7 @@ func gen() {
 %s
 `, url, question.Content)), 0666)
 
-	os.WriteFile(dir+"/main.go", []byte(fmt.Sprintf(`package main
+	ioutil.WriteFile(dir+"/main.go", []byte(fmt.Sprintf(`package main
 
 %s
 `, question.CodeDefinitions["golang"].DefaultCode)), 0666)
